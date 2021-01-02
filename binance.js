@@ -11,6 +11,11 @@ let isFinished = false;
 const maxTries = 10;
 const buyAmount = process.env.BUY_AMOUNT;
 
+const currentDate = new Date();
+currentDate.setMonth(currentDate.getMonth() + 1);
+currentDate.setDate(0);
+const daysInCurrentMonth = currentDate.getDate();
+
 const getDate = () => {
 	const dateInstance = new Date();
 	const dateString = dateInstance.toLocaleDateString();
@@ -34,7 +39,7 @@ const sleep = (ms) => {
     })
     .then(async price => {
 
-      const quantity = (buyAmount / price['BTCEUR']).toFixed(6);
+      const quantity = (buyAmount / daysInCurrentMonth / price['BTCEUR']).toFixed(6);
       
       await binance.order({
         symbol: 'BTCEUR',
